@@ -1,23 +1,33 @@
 export class Juego{
-
-    constructor() { 
+    canvas;
+    ctx;
+    width = 800;
+    height = 600;
+    constructor( canvasImage) { 
         this.listCafe = [];
         this.listDream = []
         this.jugador;
         this.profesor;
-        this.canvas = document.getElementById('canvas');
-        this.canvasWidth = '800px';
-        this.canvasHeight = '600px';
-        this.canvasImage;
-
+        this.canvasImage=canvasImage;
+        
+        
     }
-
+    
     crearCanvas() {
-        console.log('hola')
-        this.canvas.setAttribute('width', this.canvasWidth);
-        this.canvas.setAttribute('height', this.canvasHeight);
-        this.canvas.style.background='black'
+        
+        this.canvas = document.getElementById('canvas');
+        this.ctx = canvas.getContext('2d');
+        this.canvas.style.background = 'black'
+        this.canvas.width = this.width;
+        this.canvas.height = this.height;
+        const backgroundCanvas = new Image();
+        backgroundCanvas.src = this.canvasImage;
+        this.ctx.drawImage(backgroundCanvas,0,0,this.width,this.height);   
+        
+
+       
     }
+
     
 
     //crear profesor

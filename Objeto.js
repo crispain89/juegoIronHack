@@ -1,6 +1,6 @@
 export class Objeto { 
 
-    constructor() { 
+    constructor(ctx) { 
         this.x;
         this.y;
         this.ancho;
@@ -9,7 +9,9 @@ export class Objeto {
         this.cafe;
         this.nombre;
         this.dream;
+        this.ctx=ctx
     }
+    
     //genera automaticamente X
     //genera automaticamente Y
     //genera cafe automaticamente

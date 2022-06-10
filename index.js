@@ -3,12 +3,10 @@ import { Juego } from './Juego.js'
 // import { Objeto } from './Objeto.js'
 // import { Jugador } from './Jugador.js'
 
-
+console.log('uno')
+const imagenFondo='./20605.jpg'
 const juego = new Juego();
-juego.crearCanvas();
-const ctx = getContext('2d');
-let fondoJuego = new Image();
-fondoJuego.src=
 
+juego.crearCanvas(imagenFondo);
+console.log('dos')
 
-alert('holaaaaaaaaaaaaaaaaaaaaaaa')

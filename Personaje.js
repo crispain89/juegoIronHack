@@ -1,9 +1,10 @@
 export class Personaje extends Objeto{
-    constructor( ) { 
+    constructor( ctx) { 
         super(x, y, ancho, alto, imagen,cafe, dream)
         this.velocidad;
         this.nombre;
         this.tipo;//profesor o TA
+        this.ctx = ctx;
         
     }
     //genera cafe automaticamente será heredado de Objecto
