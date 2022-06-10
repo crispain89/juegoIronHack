@@ -1,6 +1,8 @@
 
 import { Personaje } from './Personaje.js'
-import { Objeto } from './Objeto.js'
+import { Cafe } from './Cafe.js'
+
+
 
 export class Juego{
     canvas;
@@ -15,12 +17,16 @@ export class Juego{
     listTA;
     MAX_CAFE = 20;
     MAX_DREAM = 20;
+    MAX_TA = 4;
     
     constructor( ) { 
         this.listCafe = [];
         this.listDream = []
         this.jugador= new Personaje(this.ctx);
         this.profesor = new Personaje(this.ctx);
+        this.cafe = new Cafe(this.generarX(), this.generarY())
+       
+        console.log('propiedades del cafe ',cafe)
         
     }
     
@@ -40,8 +46,8 @@ export class Juego{
         this.canvas.addEventListener('click',this.coordenadas)
     }
     //generara la posiciones de la X dentro del ancho del canvas
-    generarX() { 
-        let posicionX = Math.floor(Math.random() * this.width)
+    generarX() {
+        let posicionX = Math.floor(Math.random() * (this.width - 40)) + 40;
         console.log('posicion', posicionX)
         return posicionX;
     }
@@ -51,12 +57,29 @@ export class Juego{
         console.log('posicion', posicionY)
         return posicionY;
     }
-    //vamos a crear los cafes
-    crearCafes() { 
-        
+    drawObject() { 
 
-
+        this.cafe.draw(this.ctx)
     }
+
+
+
+    //vamos a crear los cafes
+
+    // crearCafes() { 
+        
+    //     console.log('crear cafe')
+    //     let x = generarX();
+    //     let y= generarY();
+    //     let cafe =new Cafe(x, y)
+    //     cafe.draw(ctx)
+    //     //coger la imagen
+    //     //las X
+    //     //las y
+    //     //width
+    //     //height
+
+    // }
  
 
     

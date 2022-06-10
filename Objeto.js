@@ -1,16 +1,17 @@
 export class Objeto { 
 
-    constructor(ctx) { 
+    constructor() { 
         this.x;
         this.y;
         this.ancho;
         this.alto;
         this.imagen;
-        this.cafe;
-        this.nombre;
-        this.dream;
-        this.ctx=ctx
     }
+    // draw(ctx) {
+    //     ctx.drawImage(backgroundCanvas, 0, 0, 800, 600); 
+        
+    // }
+
     //genera cafe automaticamente
     //destruir objeto
     //comprobará colisión
