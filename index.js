@@ -8,5 +8,5 @@ const imagenFondo='./20605.jpg'
 const juego = new Juego();
 
 juego.crearCanvas(imagenFondo);
-console.log('dos')
+
 

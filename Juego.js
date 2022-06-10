@@ -3,26 +3,30 @@ export class Juego{
     ctx;
     width = 800;
     height = 600;
-    constructor( canvasImage) { 
+    canvasImage = document.getElementById('backgroundImage');
+    constructor( ) { 
         this.listCafe = [];
         this.listDream = []
         this.jugador;
         this.profesor;
-        this.canvasImage=canvasImage;
-        
         
     }
     
     crearCanvas() {
+ 
         
         this.canvas = document.getElementById('canvas');
         this.ctx = canvas.getContext('2d');
-        this.canvas.style.background = 'black'
+       
         this.canvas.width = this.width;
         this.canvas.height = this.height;
+        
         const backgroundCanvas = new Image();
-        backgroundCanvas.src = this.canvasImage;
-        this.ctx.drawImage(backgroundCanvas,0,0,this.width,this.height);   
+        backgroundCanvas.src = this.canvasImage.src;
+        this.ctx.drawImage(backgroundCanvas, 0, 0, 800 ,600); 
+       
+
+        
         
 
        
