@@ -1,12 +1,16 @@
+import { Objeto} from './Objeto.js'
+
 export class Personaje extends Objeto{
-    constructor( ctx) { 
-        super(x, y, ancho, alto, imagen,cafe, dream)
+
+    constructor( x, y, ancho, alto, imagen,ctx,cafe, dream) { 
+        super(x, y, ancho, alto, imagen,ctx,cafe, dream)
         this.velocidad;
         this.nombre;
-        this.tipo;//profesor o TA
-        this.ctx = ctx;
+        this.tipo;//profesor , TA, Jugador
         
     }
+   
+   
     //genera cafe automaticamente será heredado de Objecto
     //cuanto más cafe mas velocidad.
     //quitar 1 de cafe al jugador

@@ -11,9 +11,6 @@ export class Objeto {
         this.dream;
         this.ctx=ctx
     }
-    
-    //genera automaticamente X
-    //genera automaticamente Y
     //genera cafe automaticamente
     //destruir objeto
     //comprobará colisión
