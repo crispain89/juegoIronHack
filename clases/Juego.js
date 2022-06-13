@@ -30,7 +30,6 @@ export class Juego {
         this.listTA = [];
         this.interval
         this.fondoCanvas = imagenCanvas;
-        
     }
     init() { 
         this.crearProtagonista();
@@ -46,8 +45,10 @@ export class Juego {
         this.clearScreen();
         this.move();
         this.draw();
-        if (this.listMonedas.length === 0) { 
+        if (this.listMonedas.length === 0 && this.protagonista.dinero<7000 ) { 
             this.stop()
+            this.clearScreen()
+
         }
     }
     stop() { 
@@ -62,9 +63,7 @@ export class Juego {
         this.protagonista.move(this.ctx)
         this.colisionMonedas();
         this.colisionMonPro();
-        //this.colisionProMon();
-
-        // this.enemigoHacienda.detectarColision(this.ctx);
+       
     }
     draw() { 
         this.drawFondo();
@@ -84,9 +83,7 @@ export class Juego {
             posicionX=120
             posicionY += 42;
         }
-    }    
-    
-    
+    }
     crearMontoro() { 
         let posicionX =Math.floor(Math.random()*this.width) ;
         let posicionY = Math.floor(Math.random()*this.height);
@@ -112,12 +109,12 @@ export class Juego {
     }
 
 
-    colisions(A, B){
-        xA + wA >= Bx &&
-            xA <= Bx + wB && 
-            yA + hA >= By && 
-            yA<=By+hB
-    }
+    // colisions(A, B){
+    //     xA + wA >= Bx &&
+    //         xA <= Bx + wB && 
+    //         yA + hA >= By && 
+    //         yA<=By+hB
+    // }
     // COLISIONES-------------------------------------------
     colisionMonedas() { 
         for (let i = 0; i < this.listMonedas.length; i++) {
@@ -127,21 +124,17 @@ export class Juego {
                 (this.protagonista.y + this.protagonista.altoPersonaje >= this.listMonedas[i].y) && 
                 (this.protagonista.y<=this.listMonedas[i].y+this.listMonedas[i].altoMoneda)
                 ) {
-                
                 this.protagonista.dinero += this.listMonedas[i].valor 
-               
-                this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+                this.marcadorProtagonista.innerHTML = this.protagonista.dinero;
                 this.listMonedas[i].musica.play()
                 this.listMonedas.splice(i, 1)
             }
         }
     }
     colisionMonPro() {
-        
         let colision = this.enemigoHacienda.detectarColision(this.protagonista)
-        console.log("COLISION",colision)
         if (colision == 'colision-superior') { 
-            this.enemigoHacienda.musica.play()
+            this.enemigoHacienda.musica.play();
             this.enemigoHacienda.y+= 10
             this.enemigoHacienda.direccionY = 'abajo'
             this.enemigoHacienda.vy = Math.floor(Math.random() * 5)
@@ -149,91 +142,34 @@ export class Juego {
             this.protagonista.dinero -= 400
             this.marcadorMontoro.innerText = this.enemigoHacienda.robado
             this.marcadorProtagonista.innerHTML = this.protagonista.dinero
-            
         }
         if (colision == 'colision-inferior') { 
-            this.enemigoHacienda.musica.play()
-
+            this.enemigoHacienda.musica.play();
             this.enemigoHacienda.y = -10;
             this.direccionY = 'arriba'
             this.enemigoHacienda.robado += 400;
             this.protagonista.dinero -= 400
             this.marcadorMontoro.innerText = this.enemigoHacienda.robado
             this.marcadorProtagonista.innerHTML=this.protagonista.dinero
-
-                
-                
-        } if (colision == 'colision-derecha') {
+        }
+        if (colision == 'colision-derecha') {
             this.enemigoHacienda.musica.play()
-
             this.enemigoHacienda.robado += 400;
             this.protagonista.dinero -= 400
             this.marcadorMontoro.innerText = this.enemigoHacienda.robado
             this.marcadorProtagonista.innerHTML=this.protagonista.dinero
-
-            
             this.enemigoHacienda.x-= 20
-            this.enemigoHacienda.direccionX = 'izquierda'
-                
-                console.log('la colision es DERECHA ')
-            
-        } if (colision == 'colision-izquierda') { 
+            this.enemigoHacienda.direccionX = 'izquierda'   
+        }
+        if (colision == 'colision-izquierda') { 
             this.enemigoHacienda.musica.play()
-
             this.enemigoHacienda.robado += 400;
             this.protagonista.dinero -= 400;
             this.marcadorMontoro.innerText = this.enemigoHacienda.robado
             this.marcadorProtagonista.innerHTML=this.protagonista.dinero
-
             this.enemigoHacienda.x+= 20
             this.enemigoHacienda.direccionX = 'derecha'
-        console.log('la colision es IZQUIERDA')
-        
+        }
     }
-            // this.protagonista.dinero -= 10;
-            // this.enemigoHacienda.robado += 10;
-            // this.marcadorMontoro.innerHTML = this.enemigoHacienda.robado;
-        // this.enemigoHacienda.musica.play();
-    }
-    // colisionProMon() {
-    //     if (((this.enemigoHacienda.x +this.enemigoHacienda.vx)+ this.enemigoHacienda.anchoPersonaje ||(this.enemigoHacienda.x - this.enemigoHacienda.vx)  + this.enemigoHacienda.anchoPersonaje >= this.protagonista.x) &&
-    //         ((this.enemigoHacienda.x +this.enemigoHacienda.vx) || (this.enemigoHacienda.x -this.enemigoHacienda.vx)<=( this.protagonista.x +this.protagonista.vx) + this.protagonista.anchoPersonaje ||( this.protagonista.x -this.protagonista.vx) + this.protagonista.anchoPersonaje) &&
-    //         ((this.enemigoHacienda.y + this.enemigoHacienda.altoPersonaje)-this.enemigoHacienda.vy||(this.enemigoHacienda.y + this.enemigoHacienda.altoPersonaje)+this.enemigoHacienda.vy >= this.protagonista.y-this.protagonista.vy ||this.protagonista.y  + this.protagonista.vy) &&
-    //         ((this.enemigoHacienda.y+this.enemigoHacienda.vy)||(this.enemigoHacienda.y-this.enemigoHacienda.vy) <= (this.protagonista.y+this.protagonista.vy) + this.protagonista.altoPersonaje||(this.protagonista.y-this.protagonista.vy) + this.protagonista.altoPersonaje)
-    //     ) {
-    //         let colision = this.protagonista.detectarColision(this.enemigoHacienda)
-    //         console.log('la colision es SUPERIOR PROTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
-    //         if (colision == 'colision-superior') {
-    //             this.enemigoHacienda.vy = Math.floor(Math.random() * 5)
-    //             this.enemigoHacienda.yUpDown = Math.round(Math.random()) ? this.enemigoHacienda.direccionY === "arriba" : this.enemigoHacienda.direccionY === "abajo"
-    //             this.enemigoHacienda.direccionY='arriba'
-    //             this.enemigoHacienda.direccionX = 'derecha'
-    //         }
-    //         if (colision == 'colision-inferior') {
-    //             console.log('la colision es INFERIOR ')
-    //             this.enemigoHacienda.vy = Math.floor(Math.random() * 3)
-    //             this.enemigoHacienda.yUpDown = Math.round(Math.random()) ? this.enemigoHacienda.direccionY === "arriba" : this.enemigoHacienda.direccionY === "abajo";  
-    //             this.enemigoHacienda.direccionX = 'derecha'
-                
-    //         } if (colision == 'colision-derecha') {
-    //             console.log('la colision es DERECHA ')
-    //             this.enemigoHacienda.vx = Math.floor(Math.random() * 3)
-    //             this.enemigoHacienda.yUpDown = Math.round(Math.random()) ? this.enemigoHacienda.direccionY === "arriba" : this.enemigoHacienda.direccionY === "abajo";  
-    //             this.enemigoHacienda.direccionX = 'derecha'
-                
-
-            
-    //         } if (colision == 'colision-izquierda') {
-    //             console.log('la colision es IZQUIERDA')
-    //             this.enemigoHacienda.vx = Math.floor(Math.random() * 3)
-    //             this.enemigoHacienda.yUpDown = Math.round(Math.random()) ? this.enemigoHacienda.direccionY === "arriba" : this.enemigoHacienda.direccionY === "abajo";  
-    //             this.enemigoHacienda.direccionX = 'izquierda'
-                
-                
-    //         }
-    //         // this.protagonista.dinero -= 10;
-    //         // this.enemigoHacienda.robado += 10;
-    //         // this.marcadorMontoro.innerHTML = this.enemigoHacienda.robado;
-    //     }
-    // }
+   
 }
