@@ -13,6 +13,7 @@ export class EnemigoHacienda extends Personaje {
         this.imagen.src='./imagenes/montoro_juego.png'
         this.vx = 3
         this.vy = 0
+        this.robado = 0;
         this.yUpDown = Math.round(Math.random())
     }
     draw(ctx) {

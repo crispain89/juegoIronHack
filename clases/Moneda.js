@@ -9,13 +9,15 @@ export class Moneda extends Objeto {
         this.y = posicionY;
         this.valor = 400;
         this.image = new Image();
-        this.image.src="./imagenes/imagenMoneda2.png"
+        this.image.src = "./imagenes/imagenMoneda2.png"
+     
+        this.musica=document.getElementById("monedaMusica")
     }
     draw(ctx) { 
         ctx.drawImage(this.image, this.x, this.y, this.anchoMoneda, this.altoMoneda)
     }
 
-   
+
    
    
 }
