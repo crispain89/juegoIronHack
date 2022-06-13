@@ -18,7 +18,7 @@ export class Juego {
     
     constructor(ctx,imagenCanvas) { 
         this.marcadorProtagonista =document.getElementById('dinerito_conseguido')
-        this.marcadoMontoro=document.getElementById('dinerito_robado')
+        this.marcadorMontoro=document.getElementById('dinerito_robado')
         this.ctx = ctx;
         this.width = 800;
         this.height = 600;
@@ -61,6 +61,8 @@ export class Juego {
         this.enemigoHacienda.comprobarRebote(this.ctx);
         this.protagonista.move(this.ctx)
         this.colisionMonedas();
+        this.colisionMonPro();
+        this.colisionProMon();
 
         // this.enemigoHacienda.detectarColision(this.ctx);
     }
@@ -135,13 +137,66 @@ export class Juego {
         }
     }
     colisionMonPro() {
-        if ((this.protagonista.x + this.protagonista.anchoPersonaje >= this.enemigoHacienda.x) &&
+        if ((this.protagonista.x + this.protagonista.anchoPersonaje/2 >= this.enemigoHacienda.x+this.enemigoHacienda.anchoPersonaje                                                                                               ) &&
             (this.protagonista.x <= this.enemigoHacienda.x + this.enemigoHacienda.anchoPersonaje) &&
             (this.protagonista.y + this.protagonista.altoPersonaje >= this.enemigoHacienda.y) &&
             (this.protagonista.y <= this.enemigoHacienda.y + this.enemigoHacienda.altoPersonaje)
         ) { 
-            
-        }
+            let colision = this.enemigoHacienda.detectarColision(this.protagonista)
+            console.log('la colision es SUPERIOR')
+            if (colision == 'colision-superior') { 
+                this.enemigoHacienda.direccionY = 'arriba'
+                this.enemigoHacienda.vy = Math.floor(Math.random() * 5)
+                this.enemigoHacienda.yUpDown = Math.round(Math.random()) ? this.enemigoHacienda.direccionY === "arriba" : this.enemigoHacienda.direccionY === "abajo"
 
-     }
+            }
+            if (colision == 'colision-inferior') { 
+                console.log('la colision es INFERIOR ')
+                
+            } if (colision == 'colision-derecha') { 
+                console.log('la colision es DERECHA ')
+            
+            } if (colision == 'colision-izquierda') { 
+                console.log('la colision es IZQUIERDA')
+                
+            }
+            // this.protagonista.dinero -= 10;
+            // this.enemigoHacienda.robado += 10;
+            // this.marcadorMontoro.innerHTML = this.enemigoHacienda.robado;
+        }
+        // this.enemigoHacienda.musica.play();
+    }
+    colisionProMon() {
+        if ((this.enemigoHacienda.x + this.enemigoHacienda.anchoPersonaje >= this.protagonista.x) &&
+            (this.enemigoHacienda.x <= this.protagonista.x + this.protagonista.anchoPersonaje) &&
+            (this.enemigoHacienda.y + this.enemigoHacienda.altoPersonaje >= this.protagonista.y) &&
+            (this.enemigoHacienda.y <= this.protagonista.y + this.protagonista.altoPersonaje)
+        ) {
+            let colision = this.protagonista.detectarColision(this.enemigoHacienda)
+            console.log('la colision es SUPERIOR')
+            if (colision == 'colision-superior') {
+                this.enemigoHacienda.direccionY = 'arriba'
+                this.enemigoHacienda.direccionX = 'derecha'
+                this.enemigoHacienda.direccionX = 'derecha'
+
+                this.enemigoHacienda.vy = Math.floor(Math.random() * 5)
+                this.enemigoHacienda.yUpDown = Math.round(Math.random()) ? this.enemigoHacienda.direccionY === "arriba" : this.enemigoHacienda.direccionY === "abajo"
+                
+
+            }
+            if (colision == 'colision-inferior') {
+                console.log('la colision es INFERIOR ')
+                
+            } if (colision == 'colision-derecha') {
+                console.log('la colision es DERECHA ')
+            
+            } if (colision == 'colision-izquierda') {
+                console.log('la colision es IZQUIERDA')
+                
+            }
+            // this.protagonista.dinero -= 10;
+            // this.enemigoHacienda.robado += 10;
+            // this.marcadorMontoro.innerHTML = this.enemigoHacienda.robado;
+        }
+    }
 }
