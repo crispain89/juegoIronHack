@@ -28,22 +28,22 @@ export class Personaje {
           return "";
         }
     
-        if (otroObjeto.y + otroObjeto.altoPersonaje === this.y) {
+        if (otroObjeto.y + otroObjeto.altoPersonaje <= (this.y + 10)) {
           return "colision-superior";
         }
     
-        if (otroObjeto.x + otroObjeto.anchoPersonaje === this.x) {
+        if (otroObjeto.x + otroObjeto.anchoPersonaje <= (this.x + 10 )) {
           return "colision-izquierda";
         }
     
-        if (otroObjeto.x === this.x + this.anchoPersonaje) {
+        if (otroObjeto.x <= (this.x + this.anchoPersonaje) + 10) {
           return "colision-derecha";
         }
-    
-        if (this.y + this.altoPersonaje === otroObjeto.y) {
+        if ((otroObjeto.y - otroObjeto.altoPersonaje)-10 <= this.y  ) {
           //Por probar
           return "colision-inferior";
         }
+    
     
         return "colision";
       };
