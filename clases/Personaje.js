@@ -12,8 +12,7 @@ export class Personaje {
         
     }
     detectarColision = (otroObjeto) => {
-        console.log(otroObjeto.anchoPersonaje)
-        console.log(this.anchoPersonaje)
+     
         
         if (otroObjeto.y + otroObjeto.altoPersonaje < this.y) {
           return "";

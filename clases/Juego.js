@@ -45,9 +45,14 @@ export class Juego {
         this.clearScreen();
         this.move();
         this.draw();
-        if (this.listMonedas.length === 0 && this.protagonista.dinero<7000 ) { 
+       // if (this.listMonedas.length === 0 && this.protagonista.dinero < 7000) { 
+        if ( this.protagonista.dinero>1000 ) { 
+            
             this.stop()
             this.clearScreen()
+            this.fondoCanvas=document.getElementById("backgroundGameOver")
+            this.drawFondo()
+            console.log(this.fondoCanvas)
 
         }
     }
