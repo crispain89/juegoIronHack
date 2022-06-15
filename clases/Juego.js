@@ -175,7 +175,7 @@ export class Juego {
     }
     crearProtagonista() {
         let posicionX =Math.floor(Math.random()*this.width) ;
-        let posicionY = Math.floor(Math.random()*this.height);
+        let posicionY = Math.floor(Math.random()*(500,this.height)+500);
         this.protagonista = new Protagonista(posicionX, posicionY);
     }
     // falta ACABAR!!!!!!!!
