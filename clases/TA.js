@@ -12,7 +12,8 @@ export class TA extends Personaje {
         this.vx = 3
         this.vy = 0;
         this.cafe = 0;
-        this.musica=document.getElementById('')
+        this.audio = new Audio();
+        this.audio.src='./musica/tA.mp3'
         this.yUpDown = Math.round(Math.random())
     }
     draw(ctx) {
