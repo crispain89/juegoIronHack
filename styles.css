@@ -13,7 +13,12 @@ img{
 #marcador{
     display:flex;
 
+
 }
 #dineroRataSabia{
     display:flex;
+    border-radius: 91px 91px 91px 91px;
+    -moz-border-radius: 91px 91px 91px 91px;
+    -webkit-border-radius: 91px 91px 91px 91px;
+    border: 10px hidden #248a1d;
 }
