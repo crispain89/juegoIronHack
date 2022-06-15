@@ -16,8 +16,8 @@ window.addEventListener('load', () => {
     start.addEventListener('click', () => {
         audio.pause();
         document.getElementById('pantalla__principal').style.display = 'none';
-        document.getElementById("marcador").style.display = 'block';
-        document.getElementById('canvas').style.display = 'block';
+        document.getElementById("marcador").style.display = 'flex';
+        document.getElementById('canvas').style.display = 'flex';
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         const imagenFondo = new Image();

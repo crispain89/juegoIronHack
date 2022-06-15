@@ -10,3 +10,7 @@ body{
 img{
     display:none;
 }
+#marcador{
+    display:flex;
+    
+}

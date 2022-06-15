@@ -79,7 +79,7 @@ export class Juego {
             if (this.listMonedas.length === 0 && this.protagonista.dinero >= 7000) {
                 document.getElementById('marcador').style.display = 'none';
                 this.nextLevel();
-                document.getElementById('marcadorCafe').style.display = 'block';
+                document.getElementById('marcadorCafe').style.display = 'flex';
             }
         } else if (this.level === 2) {
       
