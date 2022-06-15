@@ -1,6 +1,9 @@
 import { Moneda } from './Moneda.js'
 import { EnemigoHacienda } from './EnemigoHacienda.js'
 import { Protagonista } from './Protagonista.js'
+import { Cafe } from './Cafe.js'
+import { EnemigoProfe } from './EnemigoProfe.js'
+import { TA } from './TA.js'
 
 export class Juego { 
     
@@ -9,12 +12,16 @@ export class Juego {
     listMonedas
     enemigoHacienda;
     protagonista;
-    enemigoProfes;
+    enemigoProfe;
     listTA 
     intervalId;
     width;
     height;
+    MAX_CAFEs = 18;
     MAX_MONEDAS = 20;
+    sengunda;
+    MAX_TA = 4;
+    listImgTA=[]
     
     constructor(ctx,imagenCanvas) { 
         this.marcadorProtagonista =document.getElementById('dinerito_conseguido')
@@ -25,34 +32,52 @@ export class Juego {
         this.listCafes = [];
         this.listMonedas = [];
         this.enemigoHacienda;
-        this.enemigoProfes;
+        this.enemigoProfe;
         this.protagonista;
         this.listTA = [];
         this.interval
         this.fondoCanvas = imagenCanvas;
+        this.level=1;
+        this.listImgTA[0] = new Image();
+        this.listImgTA[0].src = './imagenes/edu.png'
+        this.listImgTA[1] = new Image();
+        this.listImgTA[1].src = './imagenes/victor.png'
+        this.listImgTA[2] = new Image();
+        this.listImgTA[2].src = './imagenes/alejandro.png'
+        this.listImgTA[3] = new Image();
+        this.listImgTA[3].src='./imagenes/aitor.png'
+       
     }
     init() { 
-        this.crearProtagonista();
-        this.crearMonedas();
-        this.crearMontoro();
+        if (this.level===1) {
+            this.crearProtagonista();
+            this.crearMonedas();
+            this.crearMontoro();
+        }
+        if (this.level===2) { 
+            this.crearCurro();
+            this.crearCafes();
+            this.crearTA();
+        }
         this.intervalId = setInterval(() => { 
             this.engine()
         },1000/65)
-
-
     }
-    engine() { 
+    engine() {
         this.clearScreen();
         this.move();
         this.draw();
-       // if (this.listMonedas.length === 0 && this.protagonista.dinero < 7000) { 
-        if ( this.protagonista.dinero>1000 ) { 
-            
-            this.stop()
-            this.clearScreen()
-            this.fondoCanvas=document.getElementById("backgroundGameOver")
-            this.drawFondo()
-            console.log(this.fondoCanvas)
+        if (this.level === 1) {
+            if (this.listMonedas.length === 0 && this.protagonista.dinero < 7000) {
+                this.stop()
+                this.clearScreen()
+                this.fondoCanvas = document.getElementById("backgroundGameOver")
+                this.drawFondo()
+            }
+            if (this.listMonedas.length === 0 && this.protagonista.dinero >= 7000) {
+                this.nextLevel();
+            }
+        } else if (this.level === 2) { 
 
         }
     }
@@ -64,18 +89,42 @@ export class Juego {
         this.ctx.clearRect(0,0,this.width,this.height)
     }
     move() { 
-        this.enemigoHacienda.comprobarRebote(this.ctx);
-        this.protagonista.move(this.ctx)
-        this.colisionMonedas();
-        this.colisionMonPro();
-       
+        if (this.level === 1) {
+            this.enemigoHacienda.comprobarRebote(this.ctx);
+            this.protagonista.move(this.ctx)
+            this.colisionMonedas();
+            this.colisionMonPro();
+        } else if (this.level === 2) { 
+            this.enemigoProfe.comprobarRebote(this.ctx);
+            this.protagonista.move(this.ctx)
+            this.colisionesCafes();
+            this.colisionCurronPro();
+            for (let i = 0; i < this.listTA.length; i++) { 
+                this.listTA[i].comprobarRebote(this.ctx);
+            }
+            this.colisionesTAPro();
+           
+
+        }
     }
     draw() { 
-        this.drawFondo();
-        this.drawMonedas();
-        this.drawMontoro();
-        this.drawProtagonista();
+        if (this.level===1) { 
+            this.drawFondo();
+            this.drawMonedas();
+            this.drawMontoro();
+            this.drawProtagonista();
+        }
+        if (this.level===2) { 
+            this.drawFondo();
+            this.drawCafe();
+            this.drawTa();
+            this.drawProtagonista();
+            this.drawProfe();
+        }
     }
+    
+    
+    // ---------------------CREACION--------------------------------
     crearMonedas() { 
         let posicionX = 120;
         let posicionY = 20;
@@ -89,6 +138,20 @@ export class Juego {
             posicionY += 42;
         }
     }
+    crearCafes() { 
+        let posicionX = 225;
+        let posicionY = 60;
+        for (let i = 0; i < 6; i++) { 
+            for (let j = 0; j < 3; j++) { 
+                let cafe = new Cafe(posicionX, posicionY)
+                this.listCafes.push(cafe)
+                posicionX += 225;
+            }
+            posicionX = 225;
+            posicionY += 60;
+        }
+    }
+
     crearMontoro() { 
         let posicionX =Math.floor(Math.random()*this.width) ;
         let posicionY = Math.floor(Math.random()*this.height);
@@ -100,9 +163,28 @@ export class Juego {
         let posicionY = Math.floor(Math.random()*this.height);
         this.protagonista = new Protagonista(posicionX, posicionY);
     }
+    // falta ACABAR!!!!!!!!
+    crearCurro() { 
+        let posicionX = Math.floor(Math.random() * this.width);
+        let posicionY = Math.floor(Math.random() * this.height);
+        this.enemigoProfe =new EnemigoProfe(posicionX, posicionY);
+    }
+    crearTA() { 
+        let posicionX = 10;
+        let posicionY = 10;
+        for (let i = 0; i < this.MAX_TA; i++){
+            let tA = new TA(posicionX, posicionY,this.listImgTA[i]);
+            this.listTA.push(tA)
+            posicionX += 80;
+            posicionY += 100;
+        }
+    }
+        // ---------------------DIBUJO--------------------------------
+
     drawFondo() { 
         this.ctx.drawImage(this.fondoCanvas,0,0,this.width,this.height)
     }
+    //------------------primera parte--------------------------------
     drawMontoro() { 
         this.enemigoHacienda.draw(this.ctx)
     }
@@ -112,34 +194,66 @@ export class Juego {
     drawProtagonista() { 
         this.protagonista.draw(this.ctx)
     }
+    //-----------------segunda parte ---------------------------------
+    drawTa() { 
+        for (let i = 0; i < this.listTA.length; i++) { 
+            this.listTA[i].draw(this.ctx)
+        }
+    }
+    drawCafe() { 
+        for (let i = 0; i < this.listCafes.length; i++) { 
+            this.listCafes[i].draw(this.ctx)
+        }
+    }
+    drawProfe() { 
+        this.enemigoProfe.draw(this.ctx)
+    }
 
+     // ---------------------COLISIONES--------------------------------
 
-    // colisions(A, B){
-    //     xA + wA >= Bx &&
-    //         xA <= Bx + wB && 
-    //         yA + hA >= By && 
-    //         yA<=By+hB
-    // }
-    // COLISIONES-------------------------------------------
     colisionMonedas() { 
+
         for (let i = 0; i < this.listMonedas.length; i++) {
-         
             if ((this.protagonista.x + this.protagonista.anchoPersonaje >= this.listMonedas[i].x) &&
                 (this.protagonista.x <= this.listMonedas[i].x + this.listMonedas[i].anchoMoneda) && 
                 (this.protagonista.y + this.protagonista.altoPersonaje >= this.listMonedas[i].y) && 
                 (this.protagonista.y<=this.listMonedas[i].y+this.listMonedas[i].altoMoneda)
-                ) {
+            ) {
+              
                 this.protagonista.dinero += this.listMonedas[i].valor 
                 this.marcadorProtagonista.innerHTML = this.protagonista.dinero;
-                this.listMonedas[i].musica.play()
+                console.log("moneditas", this.listMonedas[i])
+                this.listMonedas[i].audio.play()
+                // setTimeout(() => {
+                //     this.listMonedas[i].audio.play() 
+                // }, 100)                     
+                // console.log(this.listMonedas[i].audio)
+                //this.listMonedas[i].playAudio()
                 this.listMonedas.splice(i, 1)
             }
         }
     }
+    // colisionesCafes() { 
+    //     console.log('entraaaaa')
+    //     for (let i = 0; i < this.listCafes.length; i++) {
+    //         if ((this.protagonista.x + this.protagonista.anchoPersonaje >= this.listCafes[i].x) &&
+    //             (this.protagonista.x <= this.listCafes[i].x + this.listCafes[i].anchoCafe) && 
+    //             (this.protagonista.y + this.protagonista.altoPersonaje >= this.listCafes[i].y) && 
+    //             (this.protagonista.y<=this.listCafes[i].y+this.listCafes[i].altoCafe)
+    //         ) {
+    //             console.log('funciona')
+    //             this.protagonista.cafe += this.listCafes[i].valor 
+    //             // this.marcadorProtagonista.innerHTML = this.protagonista.dinero;
+    //             this.listCafes[i].audio.play()
+    //             this.listCafes.splice(i, 1)
+    //         }
+    //     }
+    // }
+    //REFACTORIZAR PARTE DE ESTE CODIGO
     colisionMonPro() {
         let colision = this.enemigoHacienda.detectarColision(this.protagonista)
         if (colision == 'colision-superior') { 
-            this.enemigoHacienda.musica.play();
+            // this.enemigoHacienda.musica.play();
             this.enemigoHacienda.y+= 10
             this.enemigoHacienda.direccionY = 'abajo'
             this.enemigoHacienda.vy = Math.floor(Math.random() * 5)
@@ -149,7 +263,7 @@ export class Juego {
             this.marcadorProtagonista.innerHTML = this.protagonista.dinero
         }
         if (colision == 'colision-inferior') { 
-            this.enemigoHacienda.musica.play();
+            this.enemigoHacienda.audio.play();
             this.enemigoHacienda.y = -10;
             this.direccionY = 'arriba'
             this.enemigoHacienda.robado += 400;
@@ -158,7 +272,7 @@ export class Juego {
             this.marcadorProtagonista.innerHTML=this.protagonista.dinero
         }
         if (colision == 'colision-derecha') {
-            this.enemigoHacienda.musica.play()
+            this.enemigoHacienda.audio.play();
             this.enemigoHacienda.robado += 400;
             this.protagonista.dinero -= 400
             this.marcadorMontoro.innerText = this.enemigoHacienda.robado
@@ -167,7 +281,7 @@ export class Juego {
             this.enemigoHacienda.direccionX = 'izquierda'   
         }
         if (colision == 'colision-izquierda') { 
-            this.enemigoHacienda.musica.play()
+            this.enemigoHacienda.audio.play();
             this.enemigoHacienda.robado += 400;
             this.protagonista.dinero -= 400;
             this.marcadorMontoro.innerText = this.enemigoHacienda.robado
@@ -175,6 +289,136 @@ export class Juego {
             this.enemigoHacienda.x+= 20
             this.enemigoHacienda.direccionX = 'derecha'
         }
+    }
+    // colisionCurronPro() {
+    //     let colision = this.enemigoProfe.detectarColision(this.protagonista)
+    //     if (colision == 'colision-superior') { 
+    //         // this.enemigoProfe.musica.play();
+    //         this.enemigoProfe.y+= 10
+    //         this.enemigoProfe.direccionY = 'abajo'
+    //         this.enemigoProfe.vy = Math.floor(Math.random() * 5)
+    //         this.enemigoProfe.robado += 10;
+    //         this.protagonista.dinero -= 10
+    //         // this.marcadorMontoro.innerText = this.enemigoProfe.robado
+    //         // this.marcadorProtagonista.innerHTML = this.protagonista.dinero
+    //     }
+    //     if (colision == 'colision-inferior') { 
+    //         // this.enemigoProfe.musica.play();
+    //         this.enemigoProfe.y = -10;
+    //         this.direccionY = 'arriba'
+    //         this.enemigoProfe.robado += 10;
+    //         this.protagonista.dinero -= 10
+    //         // this.marcadorMontoro.innerText = this.enemigoProfe.robado
+    //         // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+    //     }
+    //     if (colision == 'colision-derecha') {
+    //         // this.enemigoProfe.musica.play()
+    //         this.enemigoProfe.cafe += 10;
+    //         this.protagonista.cafe -= 10
+    //         // this.marcadorMontoro.innerText = this.enemigoProfe.robado
+    //         // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+    //         this.enemigoProfe.x-= 20
+    //         this.enemigoProfe.direccionX = 'izquierda'   
+    //     }
+    //     if (colision == 'colision-izquierda') { 
+    //         // this.enemigoProfe.musica.play()
+    //         this.enemigoProfe.robado += 10;
+    //         this.protagonista.dinero -= 10;
+    //         // this.marcadorMontoro.innerText = this.enemigoProfe.robado
+    //         // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+    //         this.enemigoProfe.x+= 20
+    //         this.enemigoProfe.direccionX = 'derecha'
+    //     }
+    // }
+     colisionCurronPro() {
+        let colision = this.enemigoProfe.detectarColision(this.protagonista)
+        if (colision == 'colision-superior') { 
+            // this.enemigoProfe.musica.play();
+            this.enemigoProfe.y+= 10
+            this.enemigoProfe.direccionY = 'abajo'
+            this.enemigoProfe.vy = Math.floor(Math.random() * 5)
+            this.enemigoProfe.robado += 10;
+            this.protagonista.dinero -= 10
+            // this.marcadorMontoro.innerText = this.enemigoProfe.robado
+            // this.marcadorProtagonista.innerHTML = this.protagonista.dinero
+        }
+        if (colision == 'colision-inferior') { 
+            // this.enemigoProfe.musica.play();
+            this.enemigoProfe.y = -10;
+            this.direccionY = 'arriba'
+            this.enemigoProfe.robado += 10;
+            this.protagonista.dinero -= 10
+            // this.marcadorMontoro.innerText = this.enemigoProfe.robado
+            // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+        }
+        if (colision == 'colision-derecha') {
+            // this.enemigoProfe.musica.play()
+            this.enemigoProfe.cafe += 10;
+            this.protagonista.cafe -= 10
+            // this.marcadorMontoro.innerText = this.enemigoProfe.robado
+            // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+            this.enemigoProfe.x-= 20
+            this.enemigoProfe.direccionX = 'izquierda'   
+        }
+        if (colision == 'colision-izquierda') { 
+            // this.enemigoProfe.musica.play()
+            this.enemigoProfe.robado += 10;
+            this.protagonista.dinero -= 10;
+            // this.marcadorMontoro.innerText = this.enemigoProfe.robado
+            // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+            this.enemigoProfe.x+= 20
+            this.enemigoProfe.direccionX = 'derecha'
+        }
+    }
+    colisionesTAPro() {
+        for (let i = 0; i < this.listTA.length; i++) {
+            let colision = this.listTA[i].detectarColision(this.protagonista)
+            if (colision == 'colision-superior') {
+                // this.enemigoProfe.musica.play();
+                this.enemigoProfe.y += 10
+                this.enemigoProfe.direccionY = 'abajo'
+                this.enemigoProfe.vy = Math.floor(Math.random() * 5)
+                this.enemigoProfe.robado += 10;
+                this.protagonista.dinero -= 10
+                // this.marcadorMontoro.innerText = this.enemigoProfe.robado
+                // this.marcadorProtagonista.innerHTML = this.protagonista.dinero
+            }
+            if (colision == 'colision-inferior') {
+                // this.enemigoProfe.musica.play();
+                this.enemigoProfe.y = -10;
+                this.direccionY = 'arriba'
+                this.enemigoProfe.robado += 10;
+                this.protagonista.dinero -= 10
+                // this.marcadorMontoro.innerText = this.enemigoProfe.robado
+                // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+            }
+            if (colision == 'colision-derecha') {
+                // this.enemigoProfe.musica.play()
+                this.enemigoProfe.cafe += 10;
+                this.protagonista.cafe -= 10
+                // this.marcadorMontoro.innerText = this.enemigoProfe.robado
+                // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+                this.enemigoProfe.x -= 20
+                this.enemigoProfe.direccionX = 'izquierda'
+            }
+            if (colision == 'colision-izquierda') {
+                // this.enemigoProfe.musica.play()
+                this.enemigoProfe.robado += 10;
+                this.protagonista.dinero -= 10;
+                // this.marcadorMontoro.innerText = this.enemigoProfe.robado
+                // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+                this.enemigoProfe.x += 20
+                this.enemigoProfe.direccionX = 'derecha'
+            }
+        }
+    }
+
+
+    nextLevel() {
+        this.stop();
+        this.clearScreen();
+        this.level++;
+        this.init();
     }
    
 }

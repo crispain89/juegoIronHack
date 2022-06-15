@@ -1,25 +1,26 @@
-import { Personaje } from './Personaje.js'
-
-export class EnemigoHacienda extends Personaje { 
-    constructor(posicionX, posicionY) { 
+import { Personaje } from './Personaje.js';
+export class EnemigoProfe extends Personaje { 
+    constructor(posicionX, posicionY) {
         super(posicionX, posicionY)
         this.x = posicionX;
         this.y = posicionY;
+
         this.direccionX = 'derecha';
         this.direccionY = 'abajo';
         this.anchoPersonaje = 50;
         this.altoPersonaje = 50;
         this.imagen = new Image();
-        this.imagen.src='./imagenes/montoro_juego.png'
+        this.imagen.src='./imagenes/curro.png'
         this.vx = 3
         this.vy = 0
-        this.robado = 0;
+        this.cafe = 0;
         this.audio = new Audio();
-        this.audio.src='./musica/risaBurns.mp3'
+        this.audio.src='./musica/risaNelson.mp3'
         this.yUpDown = Math.round(Math.random())
+
     }
-    draw(ctx) {
-        ctx.drawImage(this.imagen, this.x, this.y, this.anchoPersonaje, this.altoPersonaje)
+    draw(ctx) { 
+        ctx.drawImage(this.imagen,this.x, this.y, this.anchoPersonaje,this.altoPersonaje)
     }
     comprobarRebote(ctx) { 
         if (this.x+this.anchoPersonaje >= ctx.canvas.width - 2) { 
@@ -52,5 +53,4 @@ export class EnemigoHacienda extends Personaje {
           this.y -= this.vy
         }
     }
-   
 }

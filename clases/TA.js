@@ -1,21 +1,18 @@
-import { Personaje } from './Personaje.js'
-
-export class EnemigoHacienda extends Personaje { 
-    constructor(posicionX, posicionY) { 
-        super(posicionX, posicionY)
+import { Personaje } from './Personaje.js';
+export class TA extends Personaje {
+    constructor(posicionX, posicionY,imagenSrc) { 
+        super(posicionX, posicionY);
         this.x = posicionX;
         this.y = posicionY;
         this.direccionX = 'derecha';
         this.direccionY = 'abajo';
-        this.anchoPersonaje = 50;
-        this.altoPersonaje = 50;
-        this.imagen = new Image();
-        this.imagen.src='./imagenes/montoro_juego.png'
+        this.anchoPersonaje = 40;
+        this.altoPersonaje = 40;
+        this.imagen = imagenSrc;
         this.vx = 3
-        this.vy = 0
-        this.robado = 0;
-        this.audio = new Audio();
-        this.audio.src='./musica/risaBurns.mp3'
+        this.vy = 0;
+        this.cafe = 0;
+        this.musica=document.getElementById('')
         this.yUpDown = Math.round(Math.random())
     }
     draw(ctx) {
@@ -52,5 +49,4 @@ export class EnemigoHacienda extends Personaje {
           this.y -= this.vy
         }
     }
-   
 }

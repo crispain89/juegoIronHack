@@ -6,7 +6,7 @@ export class Protagonista extends Personaje {
     arriba;
     abajo;
     dinero;
-
+    cafe;
     constructor(posicionX, posicionY) { 
         super(posicionX, posicionY)
         this.anchoPersonaje = 50;
@@ -21,7 +21,9 @@ export class Protagonista extends Personaje {
         this.vx =this.v;
         this.vy =this.v;
         this.dinero = 0;
+        this.cafe = 0;
         this.controles();
+     
     }
     draw(ctx) {
         ctx.drawImage(this.image, this.x, this.y, this.anchoPersonaje, this.altoPersonaje)
