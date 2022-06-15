@@ -86,10 +86,14 @@ export class Juego {
 
             if (this.listCafes.length === 0) {
                 if (this.protagonista.cafe > this.enemigoProfe.cafe) {
-                    console.log('has ganado')
+                   
+                    this.stop()
 
                 } else {
-                    console.log('has perdido')
+                    this.stop()
+                    this.clearScreen()
+                    this.fondoCanvas = document.getElementById("backgroundGameOver")
+                    this.drawFondo()
                 }
             }
 
@@ -154,8 +158,8 @@ export class Juego {
         }
     }
     crearCafes() { 
-        let posicionX = 225;
-        let posicionY = 60;
+        let posicionX = 120;
+        let posicionY = 80;
         for (let i = 0; i < 6; i++) { 
             for (let j = 0; j < 3; j++) { 
                 let cafe = new Cafe(posicionX, posicionY)
@@ -163,7 +167,7 @@ export class Juego {
                 posicionX += 225;
             }
             posicionX = 225;
-            posicionY += 60;
+            posicionY += 80;
         }
     }
 
