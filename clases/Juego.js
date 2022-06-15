@@ -351,6 +351,7 @@ export class Juego {
                 this.listTA[i].vy = Math.floor(Math.random() * 5)
                 this.listTA[i].robado += 10;
                 this.protagonista.cafe -= 10
+                this.enemigoProfe.cafe += 10;
                 this.marcadorCurro.innerText = this.enemigoProfe.cafe
                 this.marcadorCafe.innerHTML = this.protagonista.cafe
             }
@@ -360,6 +361,8 @@ export class Juego {
                 this.direccionY = 'arriba'
                 this.listTA[i].robado += 10;
                 this.protagonista.cafe -= 10
+                this.enemigoProfe.cafe += 10;
+
                 this.marcadorCurro.innerText = this.enemigoProfe.cafe
                 this.marcadorCafe.innerHTML = this.protagonista.cafe
             }
@@ -367,6 +370,8 @@ export class Juego {
                 this.listTA[i].audio.play();
                 this.listTA[i].cafe += 10;
                 this.protagonista.cafe -= 10
+                this.enemigoProfe.cafe += 10;
+
                 this.marcadorCurro.innerText = this.enemigoProfe.cafe
                 this.marcadorCafe.innerHTML = this.protagonista.cafe
                 this.listTA[i].x -= 10
@@ -376,6 +381,7 @@ export class Juego {
                 this.listTA[i].audio.play();
                 this.listTA[i].robado += 10;
                 this.protagonista.cafe -= 10;
+                this.enemigoProfe.cafe += 10;
                 this.marcadorCurro.innerText = this.enemigoProfe.cafe
                 this.marcadorCafe.innerHTML = this.protagonista.cafe
                 this.listTA[i].x += 10
