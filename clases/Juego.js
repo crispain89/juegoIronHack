@@ -142,7 +142,7 @@ export class Juego {
     // ---------------------CREACION--------------------------------
     crearMonedas() { 
         let posicionX = 120;
-        let posicionY = 20;
+        let posicionY = 80;
         for (let i = 0; i < 5; i++) {
             for (let j = 0; j < 5; j++) {
                 let moneda = new Moneda(posicionX, posicionY);
@@ -150,7 +150,7 @@ export class Juego {
                 posicionX += 130;
             }
             posicionX=120
-            posicionY += 42;
+            posicionY += 82;
         }
     }
     crearCafes() { 

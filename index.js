@@ -21,8 +21,6 @@ window.addEventListener('load', () => {
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         const imagenFondo = new Image();
-    
-    
         imagenFondo.src='./imagenes/fondoCanvas.jpg'
         const juego = new Juego(ctx, imagenFondo);
         juego.init();
@@ -34,4 +32,3 @@ window.addEventListener('load', () => {
 
 
 
-// juego.crearCafes();
