@@ -2,7 +2,9 @@ body{
     display: flex;
     align-items: center;
     flex-direction: column;
-    
+    background-color:black;
+    background: url('./imagenes/backgroundHtml.png') no-repeat center center fixed; 
+
 }
 
 img{
