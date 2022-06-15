@@ -15,7 +15,9 @@ export class Cafe extends Objeto  {
         // this.musica = document.getElementById('pajaroLocoMusica');
     }
     draw(ctx) {
-        ctx.drawImage(this.image, this.x, this.y, this.anchocafe, this.altoCafe);
+
+     
+        ctx.drawImage(this.image, this.x, this.y, this.anchoCafe, this.altoCafe);
     }
     
 

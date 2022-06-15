@@ -25,7 +25,9 @@ export class Juego {
     
     constructor(ctx,imagenCanvas) { 
         this.marcadorProtagonista =document.getElementById('dinerito_conseguido')
-        this.marcadorMontoro=document.getElementById('dinerito_robado')
+        this.marcadorMontoro = document.getElementById('dinerito_robado')
+        this.marcadorCafe =document.getElementById('cafe_conseguido')
+        this.marcadorCurro=document.getElementById('cafe_robado')
         this.ctx = ctx;
         this.width = 800;
         this.height = 600;
@@ -75,10 +77,22 @@ export class Juego {
                 this.drawFondo()
             }
             if (this.listMonedas.length === 0 && this.protagonista.dinero >= 7000) {
+                document.getElementById('marcador').style.display = 'none';
                 this.nextLevel();
+                document.getElementById('marcadorCafe').style.display = 'block';
             }
-        } else if (this.level === 2) { 
-            
+        } else if (this.level === 2) {
+      
+
+            if (this.listCafes.length === 0) {
+                if (this.protagonista.cafe > this.enemigoProfe.cafe) {
+                    console.log('has ganado')
+
+                } else {
+                    console.log('has perdido')
+                }
+            }
+
 
         }
     }
@@ -117,10 +131,10 @@ export class Juego {
         }
         if (this.level===2) { 
             this.drawFondo();
-            this.drawCafe();
             this.drawTa();
             this.drawProtagonista();
             this.drawProfe();
+            this.drawCafe();
         }
     }
     
@@ -223,28 +237,23 @@ export class Juego {
               
                 this.protagonista.dinero += this.listMonedas[i].valor 
                 this.marcadorProtagonista.innerHTML = this.protagonista.dinero;
-                console.log("moneditas", this.listMonedas[i])
+             
                 this.listMonedas[i].audio.play()
-                // setTimeout(() => {
-                //     this.listMonedas[i].audio.play() 
-                // }, 100)                     
-                // console.log(this.listMonedas[i].audio)
-                //this.listMonedas[i].playAudio()
                 this.listMonedas.splice(i, 1)
             }
         }
     }
     colisionesCafes() { 
-        console.log('entraaaaa')
+   
         for (let i = 0; i < this.listCafes.length; i++) {
             if ((this.protagonista.x + this.protagonista.anchoPersonaje >= this.listCafes[i].x) &&
                 (this.protagonista.x <= this.listCafes[i].x + this.listCafes[i].anchoCafe) && 
                 (this.protagonista.y + this.protagonista.altoPersonaje >= this.listCafes[i].y) && 
                 (this.protagonista.y<=this.listCafes[i].y+this.listCafes[i].altoCafe)
             ) {
-                console.log('funciona')
+        
                 this.protagonista.cafe += this.listCafes[i].valor 
-                // this.marcadorProtagonista.innerHTML = this.protagonista.dinero;
+                this.marcadorCafe.innerHTML = this.protagonista.cafe;
                 this.listCafes[i].audio.play()
                 this.listCafes.splice(i, 1)
             }
@@ -254,7 +263,7 @@ export class Juego {
     colisionMonPro() {
         let colision = this.enemigoHacienda.detectarColision(this.protagonista)
         if (colision == 'colision-superior') { 
-            // this.enemigoHacienda.musica.play();
+            this.enemigoHacienda.audio.play();
             this.enemigoHacienda.y+= 10
             this.enemigoHacienda.direccionY = 'abajo'
             this.enemigoHacienda.vy = Math.floor(Math.random() * 5)
@@ -291,46 +300,7 @@ export class Juego {
             this.enemigoHacienda.direccionX = 'derecha'
         }
     }
-    // colisionCurronPro() {
-    //     let colision = this.enemigoProfe.detectarColision(this.protagonista)
-    //     if (colision == 'colision-superior') { 
-    //         // this.enemigoProfe.musica.play();
-    //         this.enemigoProfe.y+= 10
-    //         this.enemigoProfe.direccionY = 'abajo'
-    //         this.enemigoProfe.vy = Math.floor(Math.random() * 5)
-    //         this.enemigoProfe.robado += 10;
-    //         this.protagonista.dinero -= 10
-    //         // this.marcadorMontoro.innerText = this.enemigoProfe.robado
-    //         // this.marcadorProtagonista.innerHTML = this.protagonista.dinero
-    //     }
-    //     if (colision == 'colision-inferior') { 
-    //         // this.enemigoProfe.musica.play();
-    //         this.enemigoProfe.y = -10;
-    //         this.direccionY = 'arriba'
-    //         this.enemigoProfe.robado += 10;
-    //         this.protagonista.dinero -= 10
-    //         // this.marcadorMontoro.innerText = this.enemigoProfe.robado
-    //         // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
-    //     }
-    //     if (colision == 'colision-derecha') {
-    //         // this.enemigoProfe.musica.play()
-    //         this.enemigoProfe.cafe += 10;
-    //         this.protagonista.cafe -= 10
-    //         // this.marcadorMontoro.innerText = this.enemigoProfe.robado
-    //         // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
-    //         this.enemigoProfe.x-= 20
-    //         this.enemigoProfe.direccionX = 'izquierda'   
-    //     }
-    //     if (colision == 'colision-izquierda') { 
-    //         // this.enemigoProfe.musica.play()
-    //         this.enemigoProfe.robado += 10;
-    //         this.protagonista.dinero -= 10;
-    //         // this.marcadorMontoro.innerText = this.enemigoProfe.robado
-    //         // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
-    //         this.enemigoProfe.x+= 20
-    //         this.enemigoProfe.direccionX = 'derecha'
-    //     }
-    // }
+  
      colisionCurronPro() {
         let colision = this.enemigoProfe.detectarColision(this.protagonista)
         if (colision == 'colision-superior') { 
@@ -338,37 +308,35 @@ export class Juego {
             this.enemigoProfe.y+= 10
             this.enemigoProfe.direccionY = 'abajo'
             this.enemigoProfe.vy = Math.floor(Math.random() * 5)
-            this.enemigoProfe.robado += 10;
-            this.protagonista.dinero -= 10
-            // this.marcadorMontoro.innerText = this.enemigoProfe.robado
-            // this.marcadorProtagonista.innerHTML = this.protagonista.dinero
+            this.enemigoProfe.cafe += 10;
+            this.protagonista.cafe -= 10
+            this.marcadorCurro.innerText = this.enemigoProfe.cafe
+            this.marcadorCafe.innerHTML = this.protagonista.cafe
         }
         if (colision == 'colision-inferior') { 
             this.enemigoProfe.audio.play();
-          
             this.enemigoProfe.y = -10;
             this.direccionY = 'arriba'
             this.enemigoProfe.robado += 10;
-            this.protagonista.dinero -= 10
-            // this.marcadorMontoro.innerText = this.enemigoProfe.robado
-            // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+            this.protagonista.cafe -= 10
+            this.marcadorCurro.innerText = this.enemigoProfe.cafe
+            this.marcadorCafe.innerHTML = this.protagonista.cafe
         }
         if (colision == 'colision-derecha') {
             this.enemigoProfe.audio.play();
-
             this.enemigoProfe.cafe += 10;
             this.protagonista.cafe -= 10
-            // this.marcadorMontoro.innerText = this.enemigoProfe.robado
-            // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+            this.marcadorCurro.innerText = this.enemigoProfe.cafe
+            this.marcadorCafe.innerHTML = this.protagonista.cafe
             this.enemigoProfe.x-= 20
             this.enemigoProfe.direccionX = 'izquierda'   
         }
         if (colision == 'colision-izquierda') { 
             this.enemigoProfe.audio.play();
             this.enemigoProfe.robado += 10;
-            this.protagonista.dinero -= 10;
-            // this.marcadorMontoro.innerText = this.enemigoProfe.robado
-            // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+            this.protagonista.cafe -= 10;
+            this.marcadorCurro.innerText = this.enemigoProfe.cafe
+            this.marcadorCafe.innerHTML = this.protagonista.cafe
             this.enemigoProfe.x+= 20
             this.enemigoProfe.direccionX = 'derecha'
         }
@@ -383,33 +351,33 @@ export class Juego {
                 this.listTA[i].vy = Math.floor(Math.random() * 5)
                 this.listTA[i].robado += 10;
                 this.protagonista.cafe -= 10
-                // this.marcadorMontoro.innerText = this.enemigoProfe.robado
-                // this.marcadorProtagonista.innerHTML = this.protagonista.dinero
+                this.marcadorCurro.innerText = this.enemigoProfe.cafe
+                this.marcadorCafe.innerHTML = this.protagonista.cafe
             }
             if (colision == 'colision-inferior') {
                 this.listTA[i].audio.play();
                 this.listTA[i].y = -10;
                 this.direccionY = 'arriba'
                 this.listTA[i].robado += 10;
-                this.protagonista.dinero -= 10
-                // this.marcadorMontoro.innerText = this.listTA[i].robado
-                // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+                this.protagonista.cafe -= 10
+                this.marcadorCurro.innerText = this.enemigoProfe.cafe
+                this.marcadorCafe.innerHTML = this.protagonista.cafe
             }
             if (colision == 'colision-derecha') {
                 this.listTA[i].audio.play();
                 this.listTA[i].cafe += 10;
                 this.protagonista.cafe -= 10
-                // this.marcadorMontoro.innerText = this.enemigoProfe.robado
-                // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+                this.marcadorCurro.innerText = this.enemigoProfe.cafe
+                this.marcadorCafe.innerHTML = this.protagonista.cafe
                 this.listTA[i].x -= 10
                 this.listTA[i].direccionX = 'izquierda'
             }
             if (colision == 'colision-izquierda') {
                 this.listTA[i].audio.play();
                 this.listTA[i].robado += 10;
-                this.protagonista.dinero -= 10;
-                // this.marcadorMontoro.innerText = this.listTA[i].robado
-                // this.marcadorProtagonista.innerHTML=this.protagonista.dinero
+                this.protagonista.cafe -= 10;
+                this.marcadorCurro.innerText = this.enemigoProfe.cafe
+                this.marcadorCafe.innerHTML = this.protagonista.cafe
                 this.listTA[i].x += 10
                 this.listTA[i].direccionX = 'derecha'
             }
