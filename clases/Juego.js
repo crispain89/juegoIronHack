@@ -85,12 +85,12 @@ export class Juego {
         this.draw();
         if (this.level === 1) {
             if (this.listMonedas.length === 0 && this.protagonista.dinero < 7000) {
+                document.getElementById('audioJuego').pause()
+                this.audioLost.play();
                 this.stop()
                 this.clearScreen()
                 this.fondoCanvas = this.imagenLostDinero;
                 this.drawFondo()
-                document.getElementById('audioJuego').pause();
-                this.audioLost.play();
             }
             if (this.listMonedas.length === 0 && this.protagonista.dinero >= 7000) {
                 document.getElementById('marcador').style.display = 'none';
@@ -106,10 +106,11 @@ export class Juego {
                     this.clearScreen();
                     this.fondoCanvas = this.imagenWin;
                     this.drawFondo();
-                    
                     this.audioGanador.play()
 
                 } else {
+                    document.getElementById('audioJuego').pause()
+                    this.audioLost.play();
                     this.stop()
                     this.clearScreen()
                     this.fondoCanvas = this.imagenLostCafe;
@@ -299,15 +300,15 @@ export class Juego {
             this.enemigoHacienda.audio.play();
             this.enemigoHacienda.y = -10;
             this.direccionY = 'arriba'
-            this.enemigoHacienda.robado += 400;
-            this.protagonista.dinero -= 400
+            this.enemigoHacienda.robado += 800;
+            this.protagonista.dinero -= 800
             this.marcadorMontoro.innerText = this.enemigoHacienda.robado
             this.marcadorProtagonista.innerHTML=this.protagonista.dinero
         }
         if (colision == 'colision-derecha') {
             this.enemigoHacienda.audio.play();
-            this.enemigoHacienda.robado += 400;
-            this.protagonista.dinero -= 400
+            this.enemigoHacienda.robado += 800;
+            this.protagonista.dinero -= 800
             this.marcadorMontoro.innerText = this.enemigoHacienda.robado
             this.marcadorProtagonista.innerHTML=this.protagonista.dinero
             this.enemigoHacienda.x-= 20
@@ -315,8 +316,8 @@ export class Juego {
         }
         if (colision == 'colision-izquierda') { 
             this.enemigoHacienda.audio.play();
-            this.enemigoHacienda.robado += 400;
-            this.protagonista.dinero -= 400;
+            this.enemigoHacienda.robado += 800;
+            this.protagonista.dinero -= 800;
             this.marcadorMontoro.innerText = this.enemigoHacienda.robado
             this.marcadorProtagonista.innerHTML=this.protagonista.dinero
             this.enemigoHacienda.x+= 20

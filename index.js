@@ -8,7 +8,9 @@ const canvas = document.getElementById('canvas');
 const audioJuego = new Audio();
 audioJuego.id="audioJuego"
 audioJuego.src = './musica/intro.mp3'
-audioJuego.volume=0.5
+audioJuego.volume = 0.5
+document.body.appendChild(audioJuego)
+console.log(audioJuego)
 
 
 console.log('index')
