@@ -38,16 +38,21 @@ body{
     height: 100%;
 } */
 
-#marcador{
+#marcador, #marcadorCafe{
     display:flex;
+    width:500px;
+    justify-content: space-around;
 }
-#marcadorCafe{
-    display:flex;
 
+
+#dineroRataSabia, #dineroRobado, #cafeRataSabia,#cafeRobado{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
-#marcadorRataSabia{
-    display:flex;
-}
+
 
 #submit{
     border:solid 1px #ccc;
