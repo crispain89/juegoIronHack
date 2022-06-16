@@ -43,7 +43,7 @@ export class Juego {
         this.imagenLostCafe = new Image();
         this.imagenLostCafe.src = './imagenes/gameOverenergia.png';
         this.imagenLostDinero = new Image();
-        this.imagenLostDinero.src = './imagenes/gameOverDinero.jpg';
+        this.imagenLostDinero.src = './imagenes/GameOverDinero.jpg';
         this.audioLost = new Audio();
         this.audioLost.src = './musica/gameOverrey.mp3',
         this.audioGanador = new Audio();
