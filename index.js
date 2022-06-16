@@ -6,6 +6,7 @@ document.getElementById("marcadorCafe").style.display = 'none'
 const canvas = document.getElementById('canvas');
 
 const audioJuego = new Audio();
+audioJuego.id="audioJuego"
 audioJuego.src = './musica/intro.mp3'
 audioJuego.volume=0.5
 

@@ -89,7 +89,8 @@ export class Juego {
                 this.clearScreen()
                 this.fondoCanvas = this.imagenLostDinero;
                 this.drawFondo()
-                this.audioLost.play()
+                document.getElementById('audioJuego').pause();
+                this.audioLost.play();
             }
             if (this.listMonedas.length === 0 && this.protagonista.dinero >= 7000) {
                 document.getElementById('marcador').style.display = 'none';
