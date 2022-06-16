@@ -38,6 +38,16 @@ export class Juego {
         this.enemigoProfe;
         this.protagonista;
         this.listTA = [];
+        this.imagenWin = new Image();
+        this.imagenWin.src = './imagenes/diplomaGanador.jpg';
+        this.imagenLostCafe = new Image();
+        this.imagenLostCafe.src = './imagenes/gameOverenergia.png';
+        this.imagenLostDinero = new Image();
+        this.imagenLostDinero.src = './imagenes/gameOverDinero.jpg';
+        this.audioLost = new Audio();
+        this.audioLost.src = './musica/gameOverrey.mp3',
+        this.audioGanador = new Audio();
+        this.audioGanador.src='./musica/rajoy.mp3'
         this.interval
         this.fondoCanvas = imagenCanvas;
         this.level=1;
@@ -77,9 +87,9 @@ export class Juego {
             if (this.listMonedas.length === 0 && this.protagonista.dinero < 7000) {
                 this.stop()
                 this.clearScreen()
-                this.fondoCanvas = document.getElementById("backgroundGameOver")
+                this.fondoCanvas = this.imagenLostDinero;
                 this.drawFondo()
-                this.audioGameOver.play()
+                this.audioLost.play()
             }
             if (this.listMonedas.length === 0 && this.protagonista.dinero >= 7000) {
                 document.getElementById('marcador').style.display = 'none';
@@ -91,22 +101,25 @@ export class Juego {
 
             if (this.listCafes.length === 0) {
                 if (this.protagonista.cafe > this.enemigoProfe.cafe) {
-                   
                     this.stop()
+                    this.clearScreen();
+                    this.fondoCanvas = this.imagenWin;
+                    this.drawFondo();
+                    
+                    this.audioGanador.play()
 
                 } else {
                     this.stop()
                     this.clearScreen()
-                    this.fondoCanvas = document.getElementById("backgroundGameOver")
-                    this.drawFondo()
+                    this.fondoCanvas = this.imagenLostCafe;
+                    this.drawFondo();
+                    this.audioLost.play()
                 }
             }
-
-
         }
     }
     stop() { 
-        clearInterval(this.intervalId)
+        clearInterval(this.intervalId);
     }
     
     clearScreen() {
@@ -171,7 +184,7 @@ export class Juego {
                 this.listCafes.push(cafe)
                 posicionX += 225;
             }
-            posicionX = 225;
+            posicionX = 120;
             posicionY += 80;
         }
     }
