@@ -289,8 +289,8 @@ export class Juego {
             this.enemigoHacienda.y+= 10
             this.enemigoHacienda.direccionY = 'abajo'
             this.enemigoHacienda.vy = Math.floor(Math.random() * 5)
-            this.enemigoHacienda.robado += 400;
-            this.protagonista.dinero -= 400
+            this.enemigoHacienda.robado += 800;
+            this.protagonista.dinero -= 800
             this.marcadorMontoro.innerText = this.enemigoHacienda.robado
             this.marcadorProtagonista.innerHTML = this.protagonista.dinero
         }
