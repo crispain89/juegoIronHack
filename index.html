@@ -9,43 +9,48 @@
 </head>
 <body>
     <audio autoplay="false" id="monedaAudio" src="./musica/monedasCoger.mp3" preload="auto"></audio>
+   
+   <!-- DIV DE LA PANTALLA PRINCIPAL EMPEZAR EL JUEGO -->
     <div id="pantalla__principal">
+        <img id="backGround__pantalla"  src="./imagenes/backgroundHtml.png" alt='background'/>
+        <div class="instrucciones">
+            <h1>Bienvenidos</h1>
+            <p><span>Cómo jugar</span></p>
+            <br/>
+            <br/>
+            <div>
+               
+                <p>1.Encuentra el botón para poder jugar</p>
+                <p>2.Consigue Pep's para pagar el bootcamp</p>
+                <p>3.Consigue energia y consérvala</p>
+            </div>
+        </div>
         <button id="submit"></button>
     </div>
-    <!--CONTADOR DE DINERO  -->
-    <div id="marcador">
-        <div id="dineroRataSabia">  
-            <h3 id="dinerito_conseguido">0</h3><span>Pep's conseguidos</span>
-        </div>
-        <div id="dineroRobado">
-            <h3 id="dinerito_robado">0</h3><span>Pep's Robados por Montoro.</span>
-        </div>
-    </div>
-    <!-- CONTADOR DE CAFE -->
-    <div id="marcadorCafe">
-        <div id="cafeRataSabia">  
-            <h3 id="cafe_conseguido">0</h3><span>ENERGIA conseguida</span>
-        </div>
-        <div id="cafeRobado">
-            <h3 id="cafe_robado">0</h3><span>¡¡¡¡¡ENERGIA robada por CURRO!!!! </span>
-        </div>
-    </div>
-
-     
-    <canvas id="canvas" width='800' height="600">
-
-    </canvas>
-      
-    <img id='backgroundImage' src='./imagenes/fondoCanvas.jpg'/>
-    <img id='backgroundGameOver' src='./imagenes/gameOverT.jpg'/>
-    <img id="moneda" src="./imagenes/moneda_juego.png"/>
-    <img id="cafe" src="./imagenes/cafe1.png"/>
-    <img id="sueño" src="./imagenes/sueño.png"/>
-    <img id="curro" src="./imagenes/curro.png"/>
-    <img id="edu" src="./imagenes/edu.png"/>
-    <img id="victor" src="./imagenes/victor.png"/>
-    <img id="aitor" src="./imagenes/aitor.png"/>
-    <img id="alejandro" src="./imagenes/alejandro.png"/>
+   <!-- DIV CON EL BACKGROUND PARA EL JUEGO, ENCIMA VA EL CANVAS.-->
+   
+   <!--CONTADOR DE DINERO  -->
+   <div id="marcador">
+       <div id="dineroRataSabia">  
+           <h3 id="dinerito_conseguido">0</h3><span>Pep's conseguidos</span>
+       </div>
+       <div id="dineroRobado">
+           <h3 id="dinerito_robado">0</h3><span>Pep's Robados por Montoro.</span>
+       </div>
+   </div>
+   
+   <!-- CONTADOR DE CAFE -->
+   <div id="marcadorCafe">
+       <div id="cafeRataSabia">  
+           <h3 id="cafe_conseguido">0</h3><span>ENERGIA conseguida</span>
+       </div>
+       <div id="cafeRobado">
+           <h3 id="cafe_robado">0</h3><span>¡¡¡¡¡ENERGIA robada por CURRO!!!! </span>
+       </div>
+   </div>
+   <!-- CANVAS -->
+    <canvas id="canvas" width='800' height="600"></canvas>
+        
     <script type="module" src="./index.js"></script>
 </body>
 </html>

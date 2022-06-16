@@ -21,7 +21,8 @@ export class Juego {
     MAX_MONEDAS = 20;
     sengunda;
     MAX_TA = 4;
-    listImgTA=[]
+    listImgTA = []
+    audioGameOver;
     
     constructor(ctx,imagenCanvas) { 
         this.marcadorProtagonista =document.getElementById('dinerito_conseguido')
@@ -47,7 +48,10 @@ export class Juego {
         this.listImgTA[2] = new Image();
         this.listImgTA[2].src = './imagenes/alejandro.png'
         this.listImgTA[3] = new Image();
-        this.listImgTA[3].src='./imagenes/aitor.png'
+        this.listImgTA[3].src = './imagenes/aitor.png'
+        this.audioGameOver = new Audio();
+        this.audioGameOver.src='./musica/gameOverrey.mp3'
+        
        
     }
     init() { 
@@ -75,6 +79,7 @@ export class Juego {
                 this.clearScreen()
                 this.fondoCanvas = document.getElementById("backgroundGameOver")
                 this.drawFondo()
+                this.audioGameOver.play()
             }
             if (this.listMonedas.length === 0 && this.protagonista.dinero >= 7000) {
                 document.getElementById('marcador').style.display = 'none';
@@ -178,8 +183,8 @@ export class Juego {
         this.enemigoHacienda=montoro
     }
     crearProtagonista() {
-        let posicionX =Math.floor(Math.random()*this.width) ;
-        let posicionY = Math.floor(Math.random()*(500,this.height)+500);
+        let posicionX =Math.floor(Math.random()*this.width-40) ;
+        let posicionY = Math.floor(Math.random()*(500-(this.height-10))+500);
         this.protagonista = new Protagonista(posicionX, posicionY);
     }
     // falta ACABAR!!!!!!!!
