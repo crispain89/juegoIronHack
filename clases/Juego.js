@@ -103,7 +103,6 @@ export class Juego {
             if (this.listCafes.length === 0) {
                 if (this.protagonista.cafe > this.enemigoProfe.cafe) {
                     document.getElementById('audioJuego').pause()
-                    this.audioLost.play();
                     this.stop()
                     this.clearScreen();
                     this.fondoCanvas = this.imagenWin;
